@@ -1,6 +1,6 @@
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { prisma } from "data-source/prisma";
+import { prisma } from "data/prisma";
 
 export const meta: MetaFunction = () => {
   return [
