@@ -9,7 +9,7 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc",
-    "prisma:migrate:dev": "prisma migrate dev --schema data/prisma/schema.prisma"
+    "prisma:migrate:dev": "prisma migrate dev --schema data/data-source/prisma/schema.prisma"
   },
   "prisma": {
     "seed": "tsx data/prisma/seed/index.ts"

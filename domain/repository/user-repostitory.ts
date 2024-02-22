@@ -9,9 +9,9 @@ type LoginResponse = {
 };
 
 export interface UserRepository {
-  login({ username, password }: LoginForm): Promise<LoginResponse>;
-  register({ username, password }: LoginForm): Promise<LoginResponse>;
-  logout(request: Request): Promise<void>;
-  getUser(request: Request): Promise<LoginResponse>;
-  getUserId(request: Request): Promise<string>;
+  login({ username, password }: LoginForm): LoginResponse;
+  register({ username, password }: LoginForm): LoginResponse;
+  logout(request: Request): void;
+  getUser(request: Request): LoginResponse;
+  getUsername(request: Request): string;
 }

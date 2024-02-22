@@ -1,9 +1,9 @@
-import { Task } from "domain/model";
+import { Task } from 'domain/model';
 
 export interface TaskRepository {
-  addTask(task: Omit<Task, "id">): Promise<Task>;
-  removeTask(id: string): Promise<void>;
-  updateTask(task: Task): Promise<Task>;
-  getTasks(): Promise<Task[]>;
-  getTask(id: string): Promise<Task>;
+  addTask(task: Omit<Task, 'id'>): Task;
+  removeTask(id: string): void;
+  updateTask(task: Task): Task;
+  getAllTasks(): Task[];
+  getTaskById(id: string): Task;
 }
