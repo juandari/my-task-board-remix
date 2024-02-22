@@ -14,6 +14,4 @@ export interface UserRepository {
   logout(request: Request): Promise<void>;
   getUser(request: Request): Promise<LoginResponse>;
   getUserId(request: Request): Promise<string>;
-  // return the user id if the user is logged in, otherwise redirect to the login page
-  requireUserId(request: Request, redirectTo?: string): Promise<string>;
 }
