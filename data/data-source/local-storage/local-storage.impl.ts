@@ -3,9 +3,13 @@ import { DataSource } from '../data-source';
 
 export class LocalStorageImpl implements DataSource {
   tasks: Task[];
+  window: Window;
 
-  constructor() {
-    this.tasks = [];
+  constructor(window: Window) {
+    this.tasks = JSON.parse(
+      window.localStorage.getItem('tasks') || '[]'
+    ) as Task[];
+    this.window = window;
   }
 
   getAllTasks() {
@@ -28,6 +32,7 @@ export class LocalStorageImpl implements DataSource {
   addTask(task: Omit<Task, 'id'>) {
     const newTask = { ...task, id: this.tasks.length + 1 };
     this.tasks.push(newTask);
+    this.window.localStorage.setItem('tasks', JSON.stringify(this.tasks));
     return newTask;
   }
 

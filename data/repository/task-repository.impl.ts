@@ -10,22 +10,22 @@ export class TaskRepositoryImpl implements TaskRepository {
   }
 
   getAllTasks() {
-    // TODO: Implement logic to retrieve all tasks from local storage
+    return this.dataSource.getAllTasks();
   }
 
-  getTaskById(id: string) {
-    // TODO: Implement logic to retrieve a task by its ID from local storage
+  getTaskById(id: number) {
+    return this.dataSource.getTaskById(id);
   }
 
   addTask(task: Omit<Task, 'id'>) {
-    // TODO: Implement logic to add a task to local storage
+    return this.dataSource.addTask(task);
   }
 
   updateTask(task: Task) {
-    // TODO: Implement logic to update a task in local storage
+    return this.dataSource.updateTask(task);
   }
 
-  removeTask(id: string) {
-    // TODO: Implement logic to delete a task from local storage
+  removeTask(id: number) {
+    return this.dataSource.deleteTask(id);
   }
 }
