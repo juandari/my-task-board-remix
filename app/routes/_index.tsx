@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { type MetaFunction } from '@remix-run/node';
+
 import { LocalStorageImpl } from 'data/data-source';
 import { TaskRepositoryImpl } from 'data/repository';
-import { useEffect, useState } from 'react';
+import * as Ic from 'assets';
 
 export const meta: MetaFunction = () => {
   return [
@@ -31,9 +33,24 @@ export default function Index() {
   }, []);
 
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.8' }}>
+    <div
+      style={{
+        fontFamily: 'system-ui, sans-serif',
+        lineHeight: '1.8',
+        background: 'gray',
+      }}
+    >
       arjun
       <button onClick={handleAddTask}>Add task</button>
+      <img src={Ic.addRoundIcon} alt="" />
+      <img src={Ic.closeRing1Icon} alt="" />
+      <img src={Ic.closeRingIcon} alt="" />
+      <img src={Ic.doneRound2Icon} alt="" />
+      <img src={Ic.doneRoundIcon} alt="" />
+      <img src={Ic.editIcon} alt="" />
+      <img src={Ic.logoIcon} alt="" />
+      <img src={Ic.timeAttackIcon} alt="" />
+      <img src={Ic.trashIcon} alt="" />
     </div>
   );
 }
