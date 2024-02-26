@@ -33,13 +33,7 @@ export default function Index() {
   }, []);
 
   return (
-    <div
-      style={{
-        fontFamily: 'system-ui, sans-serif',
-        lineHeight: '1.8',
-        background: 'gray',
-      }}
-    >
+    <div className="text-3xl font-bold">
       arjun
       <button onClick={handleAddTask}>Add task</button>
       <img src={Ic.addRoundIcon} alt="" />
