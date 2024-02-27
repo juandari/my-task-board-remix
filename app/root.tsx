@@ -9,11 +9,21 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 
-import stylesheet from '~/tailwind.css';
+import styles from './index.css';
 
 export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: stylesheet },
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
+  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  {
+    rel: 'preconnect',
+    href: 'https://fonts.gstatic.com',
+    crossOrigin: 'anonymous',
+  },
+  {
+    rel: 'stylesheet',
+    href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap',
+  },
+  { rel: 'stylesheet', href: styles },
 ];
 
 export default function App() {
