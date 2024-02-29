@@ -1,15 +1,15 @@
+import { css } from 'styled-system/css';
+import { logoIcon, addRoundIcon } from 'assets';
 import { TaskRepository } from 'domain/repository/task-repository';
 import { useHomeViewModel } from './_index.view-model';
-import { logoIcon, trashIcon, timeAttackIcon } from 'assets';
-import { css } from 'styled-system/css';
+import TaskItem from './components/task-item';
 
 type HomePageProps = {
   taskRepository?: TaskRepository;
 };
 
 export default function HomePageView({ taskRepository }: HomePageProps) {
-  const { handleAddTask } = useHomeViewModel(taskRepository);
-  console.log(handleAddTask);
+  const { tasks } = useHomeViewModel(taskRepository);
 
   return (
     <main
@@ -41,46 +41,43 @@ export default function HomePageView({ taskRepository }: HomePageProps) {
         </p>
       </header>
 
-      <section className={css({ w: 'full', mt: '8' })}>
-        <article
+      <section
+        className={css({
+          w: 'full',
+          mt: '8',
+          display: 'flex',
+          flexDir: 'column',
+          gap: '5',
+        })}
+      >
+        {tasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+
+        <button
           className={css({
+            bg: 'lime.300',
+            _hover: { bg: 'lime.400' },
+            _active: { bg: 'lime.500' },
+            cursor: 'pointer',
             display: 'flex',
-            justifyContent: 'space-between',
             alignItems: 'center',
-            bg: 'yellow.300',
-            padding: '2',
+            padding: '4',
             borderRadius: 'lg',
-            gap: '1',
+            gap: '4',
           })}
         >
-          <div
-            className={css({ display: 'flex', gap: '4', alignItems: 'center' })}
-          >
-            <img
-              alt=""
-              src={trashIcon}
-              className={css({
-                borderRadius: 'lg',
-                bg: 'gray.500',
-                w: '8',
-                h: '8',
-                p: '1',
-              })}
-            />
-            <p className={css({ fontWeight: 'semibold' })}>Task in Progress</p>
-          </div>
           <img
             alt=""
-            src={timeAttackIcon}
+            src={addRoundIcon}
             className={css({
+              bg: 'green.600',
+              padding: '2',
               borderRadius: 'lg',
-              bg: 'yellow.500',
-              w: '8',
-              h: '8',
-              p: '1',
             })}
           />
-        </article>
+          <p className={css({ fontWeight: 'medium' })}>Add new task</p>
+        </button>
       </section>
     </main>
   );
