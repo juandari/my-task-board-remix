@@ -1,4 +1,4 @@
-import { useNavigate } from "@remix-run/react";
+import { useNavigate, useOutletContext } from "@remix-run/react";
 
 import { css } from "styled-system/css";
 import { logoIcon, addRoundIcon } from "assets";
@@ -6,16 +6,14 @@ import { TaskRepository } from "domain/repository/task-repository";
 import { useHomeViewModel } from "./tasks.view-model";
 import TaskItem from "./components/task-item";
 
-type HomePageProps = {
-  taskRepository?: TaskRepository;
-};
-
-export default function HomePageView({ taskRepository }: HomePageProps) {
+export default function HomePageView() {
   const navigate = useNavigate();
+
+  const taskRepository = useOutletContext<TaskRepository | undefined>();
 
   const { tasks } = useHomeViewModel(taskRepository);
 
-  function handleAddTask() {
+  function handleClickAdd() {
     navigate("./add");
   }
 
@@ -58,12 +56,12 @@ export default function HomePageView({ taskRepository }: HomePageProps) {
           gap: "5",
         })}
       >
-        {tasks.map((task) => (
+        {tasks?.map((task) => (
           <TaskItem key={task.id} task={task} />
         ))}
 
         <button
-          onClick={handleAddTask}
+          onClick={handleClickAdd}
           className={css({
             bg: "lime.300",
             _hover: { bg: "lime.400" },

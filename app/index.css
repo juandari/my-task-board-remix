@@ -1,5 +1,9 @@
 @layer reset, base, tokens, recipes, utilities;
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
+}
+
+button {
+  cursor: pointer;
 }

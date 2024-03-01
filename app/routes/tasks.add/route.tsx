@@ -1,19 +1,34 @@
-import { useNavigate } from "@remix-run/react";
+import { useNavigate, useOutletContext } from "@remix-run/react";
+
 import { css } from "styled-system/css";
-import { closeRing1Icon, timeAttackIcon } from "assets";
+import {
+  closeRing1Icon,
+  doneRoundIcon,
+  timeAttackIcon,
+  trashIcon,
+} from "assets";
 import useClickOutside from "~/hooks/use-click-outside";
-import { useRef } from "react";
+import { useAddTaskViewModel } from "./add-task.view-model";
+import { TaskRepository } from "domain/repository/task-repository";
+import { FormEvent } from "react";
 
 export default function AddTaskRoute() {
   const navigate = useNavigate();
 
-  const modalRef = useRef<HTMLDivElement>(null);
+  const taskRepository = useOutletContext<TaskRepository | undefined>();
 
-  useClickOutside(modalRef, handleClose);
+  const { addTaskModalRef } = useAddTaskViewModel(taskRepository);
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    console.log(e.currentTarget, "arjun current target");
+    // handleAddTask()
+  }
 
   function handleClose() {
     navigate(-1);
   }
+
+  useClickOutside(addTaskModalRef, handleClose);
 
   return (
     <article
@@ -29,14 +44,15 @@ export default function AddTaskRoute() {
         alignItems: "center",
       })}
     >
-      <div
+      <form
+        onSubmit={handleSubmit}
         className={css({
           bg: "white",
           p: "20px",
           borderRadius: "lg",
           w: "95vw",
         })}
-        ref={modalRef}
+        ref={addTaskModalRef}
       >
         <header
           className={css({
@@ -56,7 +72,6 @@ export default function AddTaskRoute() {
                 border: "1px solid",
                 borderColor: "gray.300",
                 borderRadius: "lg",
-                cursor: "pointer",
                 p: "2",
                 _hover: { bg: "gray.100" },
               })}
@@ -115,7 +130,6 @@ export default function AddTaskRoute() {
           <div className={css({ display: "flex", gap: "3" })}>
             <button
               className={css({
-                cursor: "pointer",
                 borderRadius: "lg",
                 bg: "gray.200",
                 p: "3",
@@ -126,7 +140,6 @@ export default function AddTaskRoute() {
             </button>
             <button
               className={css({
-                cursor: "pointer",
                 borderRadius: "lg",
                 bg: "gray.200",
                 p: "3",
@@ -137,7 +150,6 @@ export default function AddTaskRoute() {
             </button>
             <button
               className={css({
-                cursor: "pointer",
                 borderRadius: "lg",
                 bg: "gray.200",
                 p: "3",
@@ -169,7 +181,6 @@ export default function AddTaskRoute() {
                 borderColor: "gray.200",
                 p: "1",
                 w: "64",
-                cursor: "pointer",
                 _focus: { borderColor: "teal.400" },
               })}
             >
@@ -194,7 +205,6 @@ export default function AddTaskRoute() {
                 borderColor: "gray.200",
                 p: "1",
                 w: "64",
-                cursor: "pointer",
                 _focus: { borderColor: "teal.400" },
               })}
             >
@@ -219,7 +229,6 @@ export default function AddTaskRoute() {
                 borderColor: "gray.200",
                 p: "1",
                 w: "64",
-                cursor: "pointer",
                 _focus: { borderColor: "teal.400" },
               })}
             >
@@ -236,7 +245,50 @@ export default function AddTaskRoute() {
             </button>
           </div>
         </div>
-      </div>
+
+        <div
+          className={css({
+            mt: "14",
+            display: "flex",
+            w: "full",
+            justifyContent: "flex-end",
+            gap: "3",
+          })}
+        >
+          <button
+            className={css({
+              display: "flex",
+              alignItems: "center",
+              gap: "2",
+              px: "5",
+              py: "2",
+              bg: "slate.400",
+              color: "white",
+              borderRadius: "full",
+              _hover: { bg: "slate.500" },
+            })}
+          >
+            <p>Delete</p>
+            <img alt="" src={trashIcon} />
+          </button>
+          <button
+            className={css({
+              display: "flex",
+              alignItems: "center",
+              gap: "2",
+              px: "5",
+              py: "2",
+              bg: "blue.400",
+              color: "white",
+              borderRadius: "full",
+              _hover: { bg: "blue.500" },
+            })}
+          >
+            <p>Save</p>
+            <img alt="" src={doneRoundIcon} />
+          </button>
+        </div>
+      </form>
     </article>
   );
 }

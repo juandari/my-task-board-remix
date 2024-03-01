@@ -1,5 +1,6 @@
-import { cssBundleHref } from '@remix-run/css-bundle';
-import type { LinksFunction } from '@remix-run/node';
+import { useEffect, useState } from "react";
+import { cssBundleHref } from "@remix-run/css-bundle";
+import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -7,26 +8,37 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react';
+} from "@remix-run/react";
 
-import styles from './index.css';
+import styles from "./index.css";
+import { LocalStorageImpl } from "data/data-source";
+import { TaskRepositoryImpl } from "data/repository";
+import { TaskRepository } from "domain/repository/task-repository";
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
-    crossOrigin: 'anonymous',
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "anonymous",
   },
   {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap',
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap",
   },
-  { rel: 'stylesheet', href: styles },
+  { rel: "stylesheet", href: styles },
 ];
 
 export default function App() {
+  const [taskRepository, setTaskRepository] = useState<TaskRepository>();
+
+  useEffect(() => {
+    const dataSource = new LocalStorageImpl(window);
+    const repository = new TaskRepositoryImpl(dataSource);
+    setTaskRepository(repository);
+  }, []);
+
   return (
     <html lang="en">
       <head>
@@ -36,7 +48,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <Outlet context={taskRepository} />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
