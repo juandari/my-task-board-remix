@@ -18,12 +18,13 @@ export default function HomePageView() {
   }
 
   return (
-    <main
+    <div
       className={css({
         padding: "5",
         display: "flex",
         flexDir: "column",
-        alignItems: "center",
+        maxW: "640px",
+        margin: "0 auto",
       })}
     >
       <header
@@ -63,7 +64,7 @@ export default function HomePageView() {
         <button
           onClick={handleClickAdd}
           className={css({
-            bg: "lime.300",
+            bg: "lime.200",
             _hover: { bg: "lime.400" },
             _active: { bg: "lime.500" },
             cursor: "pointer",
@@ -78,7 +79,7 @@ export default function HomePageView() {
             alt=""
             src={addRoundIcon}
             className={css({
-              bg: "green.600",
+              bg: "green.500",
               padding: "2",
               borderRadius: "lg",
             })}
@@ -86,6 +87,6 @@ export default function HomePageView() {
           <p className={css({ fontWeight: "medium" })}>Add new task</p>
         </button>
       </section>
-    </main>
+    </div>
   );
 }
