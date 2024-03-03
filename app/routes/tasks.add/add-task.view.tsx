@@ -5,19 +5,21 @@ import { closeRing1Icon, doneRoundIcon, trashIcon } from "assets";
 import useClickOutside from "~/hooks/use-click-outside";
 import { useAddTaskViewModel } from "./add-task.view-model";
 import { TaskRepository } from "domain/repository/task-repository";
-import { FormEvent } from "react";
 
 export default function AddTaskView() {
   const navigate = useNavigate();
 
   const taskRepository = useOutletContext<TaskRepository | undefined>();
 
-  const { addTaskModalRef, statuses } = useAddTaskViewModel(taskRepository);
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    console.log(e.currentTarget, "arjun current target");
-    // handleAddTask()
-  }
+  const {
+    addTaskModalRef,
+    statuses,
+    icons,
+    selectedIconId,
+    selectedStatusId,
+    setSelectedIconId,
+    setSelectedStatusId,
+  } = useAddTaskViewModel(taskRepository);
 
   function handleClose() {
     navigate(-1);
@@ -44,7 +46,6 @@ export default function AddTaskView() {
       })}
     >
       <form
-        onSubmit={handleSubmit}
         className={css({
           bg: "white",
           p: "20px",
@@ -125,43 +126,34 @@ export default function AddTaskView() {
         </div>
 
         <div className={css({ mt: "4" })}>
-          <p className={css({ color: "gray.400", fontSize: "sm" })}>Icon</p>
+          <p className={css({ color: "gray.400", fontSize: "sm", mb: "1" })}>
+            Icon
+          </p>
           <div className={css({ display: "flex", gap: "3" })}>
-            <button
-              className={css({
-                borderRadius: "lg",
-                bg: "gray.200",
-                p: "3",
-                _hover: { bg: "gray.300" },
-              })}
-            >
-              <img alt="" src={closeRing1Icon} />
-            </button>
-            <button
-              className={css({
-                borderRadius: "lg",
-                bg: "gray.200",
-                p: "3",
-                _hover: { bg: "gray.300" },
-              })}
-            >
-              <img alt="" src={closeRing1Icon} />
-            </button>
-            <button
-              className={css({
-                borderRadius: "lg",
-                bg: "gray.200",
-                p: "3",
-                _hover: { bg: "gray.300" },
-              })}
-            >
-              <img alt="" src={closeRing1Icon} />
-            </button>
+            {icons.map((icon) => (
+              <button
+                key={icon.id}
+                onClick={() => setSelectedIconId(icon.id)}
+                className={css({
+                  borderRadius: "lg",
+                  bg: "gray.200",
+                  p: "3",
+                  border: "2px solid",
+                  borderColor:
+                    selectedIconId === icon.id ? "teal.400" : "transparent",
+                  _hover: { bg: "gray.300" },
+                })}
+              >
+                <img alt="" src={closeRing1Icon} />
+              </button>
+            ))}
           </div>
         </div>
 
         <div className={css({ mt: "4" })}>
-          <p className={css({ color: "gray.400", fontSize: "sm" })}>Status</p>
+          <p className={css({ color: "gray.400", fontSize: "sm", mb: "1" })}>
+            Status
+          </p>
           <div
             className={css({
               display: "flex",
@@ -173,13 +165,15 @@ export default function AddTaskView() {
             {statuses.map((status) => (
               <button
                 key={status.id}
+                onClick={() => setSelectedStatusId(status.id)}
                 className={css({
                   display: "flex",
                   alignItems: "center",
                   gap: "3",
                   borderRadius: "xl",
                   border: "2px solid",
-                  borderColor: "gray.200",
+                  borderColor:
+                    selectedStatusId === status.id ? "teal.400" : "gray.200",
                   p: "1",
                   w: "45%",
                   _focus: { borderColor: "teal.400" },

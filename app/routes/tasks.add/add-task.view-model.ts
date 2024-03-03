@@ -1,8 +1,8 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { Task } from "domain/model";
 import { TaskRepository } from "domain/repository/task-repository";
-import { timeAttackIcon } from "assets";
+import { closeRing1Icon, timeAttackIcon } from "assets";
 
 const statuses = [
   {
@@ -25,8 +25,25 @@ const statuses = [
   },
 ];
 
+const icons = [
+  {
+    id: 1,
+    icon: closeRing1Icon,
+  },
+  {
+    id: 2,
+    icon: closeRing1Icon,
+  },
+  {
+    id: 3,
+    icon: closeRing1Icon,
+  },
+];
+
 export function useAddTaskViewModel(taskRepository?: TaskRepository) {
   const addTaskModalRef = useRef<HTMLFormElement>(null);
+  const [selectedIconId, setSelectedIconId] = useState(icons[0].id);
+  const [selectedStatusId, setSelectedStatusId] = useState(statuses[0].id);
 
   const handleAddTask = (task: Task) => {
     taskRepository?.addTask(task);
@@ -35,6 +52,11 @@ export function useAddTaskViewModel(taskRepository?: TaskRepository) {
   return {
     addTaskModalRef,
     statuses,
+    icons,
+    selectedIconId,
+    selectedStatusId,
+    setSelectedIconId,
+    setSelectedStatusId,
     handleAddTask,
   };
 }
