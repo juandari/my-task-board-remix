@@ -14,6 +14,8 @@ import styles from "./index.css";
 import { LocalStorageImpl } from "data/data-source";
 import { TaskRepositoryImpl } from "data/repository";
 import { TaskRepository } from "domain/repository/task-repository";
+import { localStorageKey } from "./local-storage/constant";
+import { Icon, Status } from "domain/model";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -32,6 +34,23 @@ export const links: LinksFunction = () => [
 
 export default function App() {
   const [taskRepository, setTaskRepository] = useState<TaskRepository>();
+  // TODO: move this to zustand store
+  const [icons, setIcons] = useState<Icon[]>([]);
+  const [statuses, setStatuses] = useState<Status[]>([]);
+
+  // seed data to local storage
+  useEffect(() => {
+    const statuses = window.localStorage.getItem(localStorageKey.STATUS);
+    const icons = window.localStorage.getItem(localStorageKey.ICON);
+
+    if (statuses) {
+      setStatuses(JSON.parse(statuses));
+    }
+
+    if (icons) {
+      setIcons(JSON.parse(icons));
+    }
+  }, []);
 
   useEffect(() => {
     const dataSource = new LocalStorageImpl(window);

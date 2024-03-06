@@ -13,7 +13,7 @@
     "prepare": "panda codegen"
   },
   "prisma": {
-    "seed": "tsx data/data-source/prisma/seed/index.ts"
+    "seed": "tsx data/data-source/prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "5.9.1",
@@ -23,7 +23,8 @@
     "@remix-run/serve": "^2.6.0",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@pandacss/dev": "^0.32.1",

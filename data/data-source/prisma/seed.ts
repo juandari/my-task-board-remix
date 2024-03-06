@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client';
-import { statuses } from 'domain/model';
+import { PrismaClient } from "@prisma/client";
+import { statuses } from "domain/model";
 
 const prisma = new PrismaClient();
-const seedIconData = ['☕', '💬', '💪🏻', '⛹🏻‍♂️', '📚', '⏰'];
+const seedIconData = ["☕", "💬", "💪🏻", "⛹🏻‍♂️", "📚", "⏰"];
 const seedStatusData = statuses;
 
 async function main() {
@@ -26,7 +26,7 @@ async function main() {
 main()
   .then(async () => {
     await prisma.$disconnect();
-    console.log('Seed icon data created successfully');
+    console.log("Seed icon data created successfully");
   })
   .catch(async (e) => {
     console.error(e);

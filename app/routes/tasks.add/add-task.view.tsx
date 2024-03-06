@@ -2,7 +2,7 @@ import { useNavigate, useOutletContext } from "@remix-run/react";
 
 import { css } from "styled-system/css";
 import { closeRing1Icon, doneRoundIcon, trashIcon } from "assets";
-import useClickOutside from "~/hooks/use-click-outside";
+import useClickOutside from "~/hook/use-click-outside";
 import { useAddTaskViewModel } from "./add-task.view-model";
 import { TaskRepository } from "domain/repository/task-repository";
 
