@@ -15,7 +15,8 @@ import { LocalStorageImpl } from "data/data-source";
 import { TaskRepositoryImpl } from "data/repository";
 import { TaskRepository } from "domain/repository/task-repository";
 import { localStorageKey } from "./local-storage/constant";
-import { Icon, Status } from "domain/model";
+import { seedLocalStorage } from "./local-storage/seed.client";
+import { useStore } from "./store";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -33,24 +34,24 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
+  const updateStatuses = useStore((state) => state.updateStatuses);
+  const updateIcons = useStore((state) => state.updateIcons);
   const [taskRepository, setTaskRepository] = useState<TaskRepository>();
-  // TODO: move this to zustand store
-  const [icons, setIcons] = useState<Icon[]>([]);
-  const [statuses, setStatuses] = useState<Status[]>([]);
 
   // seed data to local storage
   useEffect(() => {
+    seedLocalStorage(window);
     const statuses = window.localStorage.getItem(localStorageKey.STATUS);
     const icons = window.localStorage.getItem(localStorageKey.ICON);
 
     if (statuses) {
-      setStatuses(JSON.parse(statuses));
+      updateStatuses(JSON.parse(statuses));
     }
 
     if (icons) {
-      setIcons(JSON.parse(icons));
+      updateIcons(JSON.parse(icons));
     }
-  }, []);
+  }, [updateIcons, updateStatuses]);
 
   useEffect(() => {
     const dataSource = new LocalStorageImpl(window);

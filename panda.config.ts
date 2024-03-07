@@ -1,15 +1,15 @@
-import { defineConfig } from '@pandacss/dev';
+import { defineConfig } from "@pandacss/dev";
 
 export default defineConfig({
   // Whether to use css reset
   preflight: true,
 
   // The extension for the emitted JavaScript files
-  outExtension: 'js',
+  outExtension: "js",
   // Where to look for your css declarations
   include: [
-    './app/routes/**/*.{ts,tsx,js,jsx}',
-    './app/components/**/*.{ts,tsx,js,jsx}',
+    "./app/routes/**/*.{ts,tsx,js,jsx}",
+    "./app/components/**/*.{ts,tsx,js,jsx}",
   ],
 
   // Files to exclude
@@ -21,5 +21,16 @@ export default defineConfig({
   },
 
   // The output directory for your css system
-  outdir: 'styled-system',
+  outdir: "styled-system",
+
+  staticCss: {
+    css: [
+      {
+        properties: {
+          // Pre-generate the styles for the color
+          backgroundColor: ["red.400", "orange.400", "green.400"],
+        },
+      },
+    ],
+  },
 });

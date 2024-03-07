@@ -132,19 +132,20 @@ export default function AddTaskView() {
           <div className={css({ display: "flex", gap: "3" })}>
             {icons.map((icon) => (
               <button
-                key={icon.id}
-                onClick={() => setSelectedIconId(icon.id)}
+                key={icon?.id}
+                onClick={() => setSelectedIconId(icon?.id)}
                 className={css({
                   borderRadius: "lg",
-                  bg: "gray.200",
-                  p: "3",
+                  bg: "slate.300",
+                  p: "2",
+                  fontSize: "24px",
                   border: "2px solid",
                   borderColor:
-                    selectedIconId === icon.id ? "teal.400" : "transparent",
+                    selectedIconId === icon?.id ? "teal.400" : "transparent",
                   _hover: { bg: "gray.300" },
                 })}
               >
-                <img alt="" src={closeRing1Icon} />
+                {icon?.value}
               </button>
             ))}
           </div>
@@ -164,8 +165,8 @@ export default function AddTaskView() {
           >
             {statuses.map((status) => (
               <button
-                key={status.id}
-                onClick={() => setSelectedStatusId(status.id)}
+                key={status?.id}
+                onClick={() => setSelectedStatusId(status?.id)}
                 className={css({
                   display: "flex",
                   alignItems: "center",
@@ -173,7 +174,7 @@ export default function AddTaskView() {
                   borderRadius: "xl",
                   border: "2px solid",
                   borderColor:
-                    selectedStatusId === status.id ? "teal.400" : "gray.200",
+                    selectedStatusId === status?.id ? "teal.400" : "gray.200",
                   p: "1",
                   w: "45%",
                   _focus: { borderColor: "teal.400" },
@@ -181,14 +182,14 @@ export default function AddTaskView() {
               >
                 <img
                   alt=""
-                  src={status.icon}
-                  style={{ background: status.color }}
+                  src={status?.icon}
                   className={css({
                     borderRadius: "xl",
                     p: "3",
+                    bg: status?.color,
                   })}
                 />
-                <p>{status.name}</p>
+                <p>{status?.name}</p>
               </button>
             ))}
           </div>
