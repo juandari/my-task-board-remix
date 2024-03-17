@@ -11,19 +11,25 @@ export function useAddTaskViewModel(taskRepository?: TaskRepository) {
   const addTaskModalRef = useRef<HTMLFormElement>(null);
   const [selectedIconId, setSelectedIconId] = useState(icons[0]?.id);
   const [selectedStatusId, setSelectedStatusId] = useState(statuses[0]?.id);
+  const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
 
-  const handleAddTask = (task: Task) => {
+  const handleAddTask = (task: Omit<Task, "id">) => {
     taskRepository?.addTask(task);
   };
 
   return {
     statuses,
+    taskName,
+    taskDescription,
     icons,
     addTaskModalRef,
     selectedIconId,
     selectedStatusId,
     setSelectedIconId,
     setSelectedStatusId,
+    setTaskName,
+    setTaskDescription,
     handleAddTask,
   };
 }

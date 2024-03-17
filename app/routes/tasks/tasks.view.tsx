@@ -1,15 +1,16 @@
-import { useNavigate, useOutletContext } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 
 import { css } from "styled-system/css";
 import { logoIcon, addRoundIcon } from "assets";
-import { TaskRepository } from "domain/repository/task-repository";
 import { useHomeViewModel } from "./tasks.view-model";
 import TaskItem from "./components/task-item";
+import { TaskRepository } from "domain/repository/task-repository";
 
-export default function HomePageView() {
+type HomePageViewProps = {
+  taskRepository?: TaskRepository;
+};
+export default function HomePageView({ taskRepository }: HomePageViewProps) {
   const navigate = useNavigate();
-
-  const taskRepository = useOutletContext<TaskRepository | undefined>();
 
   const { tasks } = useHomeViewModel(taskRepository);
 

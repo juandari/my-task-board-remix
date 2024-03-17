@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
 import {
@@ -11,9 +11,6 @@ import {
 } from "@remix-run/react";
 
 import styles from "./index.css";
-import { LocalStorageImpl } from "data/data-source";
-import { TaskRepositoryImpl } from "data/repository";
-import { TaskRepository } from "domain/repository/task-repository";
 import { localStorageKey } from "./local-storage/constant";
 import { seedLocalStorage } from "./local-storage/seed.client";
 import { useStore } from "./store";
@@ -36,7 +33,6 @@ export const links: LinksFunction = () => [
 export default function App() {
   const updateStatuses = useStore((state) => state.updateStatuses);
   const updateIcons = useStore((state) => state.updateIcons);
-  const [taskRepository, setTaskRepository] = useState<TaskRepository>();
 
   // seed data to local storage
   useEffect(() => {
@@ -53,12 +49,6 @@ export default function App() {
     }
   }, [updateIcons, updateStatuses]);
 
-  useEffect(() => {
-    const dataSource = new LocalStorageImpl(window);
-    const repository = new TaskRepositoryImpl(dataSource);
-    setTaskRepository(repository);
-  }, []);
-
   return (
     <html lang="en">
       <head>
@@ -68,7 +58,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet context={taskRepository} />
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
