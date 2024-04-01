@@ -4,11 +4,12 @@ import { css } from 'styled-system/css';
 
 interface TaskItemProps {
   task: Task;
+  onClick: (id: number) => void;
 }
 
-export default function TaskItem({ task }: TaskItemProps) {
+export default function TaskItem({ task, onClick }: TaskItemProps) {
   return (
-    <article
+    <button
       className={css({
         bg: 'yellow.300',
         display: 'flex',
@@ -18,20 +19,35 @@ export default function TaskItem({ task }: TaskItemProps) {
         borderRadius: 'lg',
         gap: '1',
       })}
+      onClick={() => onClick(task.id)}
     >
-      <div className={css({ display: 'flex', gap: '4', alignItems: 'center' })}>
-        <img
-          alt=""
-          src={task.iconURL}
+      <div
+        className={css({
+          display: 'flex',
+          gap: '4',
+          alignItems: task.description ? 'flex-start' : 'center',
+        })}
+      >
+        <span
           className={css({
             borderRadius: 'lg',
-            bg: 'gray.500',
+            bg: 'gray.50',
             w: '8',
             h: '8',
             p: '1',
+            textAlign: 'center',
           })}
-        />
-        <p className={css({ fontWeight: 'semibold' })}>{task.title}</p>
+        >
+          {task.icon}
+        </span>
+        <div
+          className={css({
+            textAlign: 'left',
+          })}
+        >
+          <p className={css({ fontWeight: 'semibold' })}>{task.title}</p>
+          <p>{task.description}</p>
+        </div>
       </div>
       <img
         alt=""
@@ -44,6 +60,6 @@ export default function TaskItem({ task }: TaskItemProps) {
           p: '1',
         })}
       />
-    </article>
+    </button>
   );
 }

@@ -1,13 +1,14 @@
-import { useNavigate, useOutletContext } from '@remix-run/react';
+import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
 
 import useClickOutside from '~/hook/use-click-outside';
-import { useAddTaskViewModel } from './add-task.view-model';
+import { useEditTaskViewModel } from './edit-task.view-model';
 import { TaskOutletContext } from '../tasks/route';
 import { StatusName } from 'domain/model';
 import TaskDetailModal from '~/components/task-detail-modal';
 
 export default function AddTaskView() {
   const navigate = useNavigate();
+  const { taskId } = useParams();
 
   const { taskRepository } = useOutletContext<TaskOutletContext>();
 
@@ -23,8 +24,8 @@ export default function AddTaskView() {
     setTaskDescription,
     setSelectedIconId,
     setSelectedStatusId,
-    handleAddTask,
-  } = useAddTaskViewModel(taskRepository);
+    handleEditTask,
+  } = useEditTaskViewModel(taskId, taskRepository);
 
   function handleClose() {
     navigate(-1);
@@ -35,7 +36,7 @@ export default function AddTaskView() {
   }
 
   function handleSubmitClientSide() {
-    handleAddTask({
+    handleEditTask({
       description: taskDescription,
       icon: icons.find((icon) => icon?.id === selectedIconId)?.value || '',
       status: (statuses.find((status) => status?.id === selectedStatusId)

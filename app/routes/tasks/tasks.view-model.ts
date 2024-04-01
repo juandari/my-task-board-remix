@@ -1,4 +1,4 @@
-import { TaskRepository } from "domain/repository/task-repository";
+import { TaskRepository } from 'domain/repository/task-repository';
 
 export function useHomeViewModel(taskRepository?: TaskRepository) {
   const tasks = taskRepository?.getAllTasks() || [];
