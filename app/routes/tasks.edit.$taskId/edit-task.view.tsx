@@ -1,10 +1,10 @@
-import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
+import { useNavigate, useOutletContext, useParams } from "@remix-run/react";
 
-import useClickOutside from '~/hook/use-click-outside';
-import { useEditTaskViewModel } from './edit-task.view-model';
-import { TaskOutletContext } from '../tasks/route';
-import { StatusName } from 'domain/model';
-import TaskDetailModal from '~/components/task-detail-modal';
+import useClickOutside from "~/hook/use-click-outside";
+import { useEditTaskViewModel } from "./edit-task.view-model";
+import { TaskOutletContext } from "../tasks/route";
+import { StatusName } from "domain/model";
+import TaskDetailModal from "~/components/task-detail-modal";
 
 export default function AddTaskView() {
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ export default function AddTaskView() {
     setSelectedIconId,
     setSelectedStatusId,
     handleEditTask,
+    handleDeleteTask,
   } = useEditTaskViewModel(taskId, taskRepository);
 
   function handleClose() {
@@ -32,18 +33,19 @@ export default function AddTaskView() {
   }
 
   function handleDelete() {
+    handleDeleteTask(Number(taskId));
     navigate(-1);
   }
 
   function handleSubmitClientSide() {
     handleEditTask({
       description: taskDescription,
-      icon: icons.find((icon) => icon?.id === selectedIconId)?.value || '',
+      icon: icons.find((icon) => icon?.id === selectedIconId)?.value || "",
       status: (statuses.find((status) => status?.id === selectedStatusId)
-        ?.name || 'In Progress') as StatusName,
+        ?.name || "In Progress") as StatusName,
       title: taskName,
     });
-    navigate('..');
+    navigate("..");
   }
 
   useClickOutside(addTaskModalRef, handleClose);

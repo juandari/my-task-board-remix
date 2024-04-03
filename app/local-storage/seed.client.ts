@@ -2,7 +2,7 @@ import { timeAttackIcon, doneRound2Icon, closeRingIcon } from "assets";
 
 const seedIconData = ["☕", "💬", "💪🏻", "⛹🏻‍♂️", "📚", "⏰"];
 
-const seedStatusData = [
+export const seedStatusData = [
   {
     id: 1,
     name: "In Progress",

@@ -1,6 +1,6 @@
-export const statuses = ['In Progress', 'Done', 'To Do'] as const;
+export const statuses = ["In Progress", "Done", "To Do"] as const;
 
-export type StatusName = 'In Progress' | 'Done' | 'To Do';
+export type StatusName = "In Progress" | "Done" | "To Do";
 
 export type Task = {
   id: number;

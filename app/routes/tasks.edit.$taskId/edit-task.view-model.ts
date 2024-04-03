@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 
-import { Task } from 'domain/model';
-import { TaskRepository } from 'domain/repository/task-repository';
-import { useStore } from '~/store';
+import { Task } from "domain/model";
+import { TaskRepository } from "domain/repository/task-repository";
+import { useStore } from "~/store";
 
 export function useEditTaskViewModel(
   taskId?: string,
@@ -15,14 +15,19 @@ export function useEditTaskViewModel(
   const addTaskModalRef = useRef<HTMLFormElement>(null);
   const [selectedIconId, setSelectedIconId] = useState(icons[0]?.id);
   const [selectedStatusId, setSelectedStatusId] = useState(statuses[0]?.id);
-  const [taskName, setTaskName] = useState(task?.title || '');
+  const [taskName, setTaskName] = useState(task?.title || "");
   const [taskDescription, setTaskDescription] = useState(
-    task?.description || ''
+    task?.description || ""
   );
 
-  const handleEditTask = (task: Omit<Task, 'id'>) => {
-    taskRepository?.updateTask({ ...task, id: Number(taskId) });
-  };
+  function handleEditTask(task: Omit<Task, "id">) {
+    if (taskRepository)
+      taskRepository?.updateTask({ ...task, id: Number(taskId) });
+  }
+
+  function handleDeleteTask(taskId: number) {
+    if (taskRepository) taskRepository.removeTask(taskId);
+  }
 
   return {
     statuses,
@@ -37,5 +42,6 @@ export function useEditTaskViewModel(
     setTaskName,
     setTaskDescription,
     handleEditTask,
+    handleDeleteTask,
   };
 }
